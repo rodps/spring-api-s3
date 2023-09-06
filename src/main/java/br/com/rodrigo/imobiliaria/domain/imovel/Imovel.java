@@ -23,6 +23,41 @@ public class Imovel {
         this.caracteristicas = new Caracteristicas(dados.caracteristicas());
     }
 
+    public Imovel() {}
+
+    public Imovel(Long id, String nome, Double valor, String descricao, Endereco endereco, Caracteristicas caracteristicas) {
+        this.id = id;
+        this.nome = nome;
+        this.valor = valor;
+        this.descricao = descricao;
+        this.endereco = endereco;
+        this.caracteristicas = caracteristicas;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public void setCaracteristicas(Caracteristicas caracteristicas) {
+        this.caracteristicas = caracteristicas;
+    }
+
     public Long getId() {
         return id;
     }

@@ -1,6 +1,7 @@
 package br.com.rodrigo.imobiliaria.controller;
 
 import br.com.rodrigo.imobiliaria.domain.imovel.DadosCadastroImovel;
+import br.com.rodrigo.imobiliaria.domain.imovel.DadosDetalhamentoImovel;
 import br.com.rodrigo.imobiliaria.domain.imovel.Imovel;
 import br.com.rodrigo.imobiliaria.domain.imovel.ImovelRepository;
 import jakarta.validation.Valid;
@@ -24,5 +25,12 @@ public class ImoveisController {
         var uri = uriComponentsBuilder.path("/imoveis/{id}").buildAndExpand(imovel.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id) {
+        var imovel = imovelRepository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhamentoImovel(imovel));
+
     }
 }

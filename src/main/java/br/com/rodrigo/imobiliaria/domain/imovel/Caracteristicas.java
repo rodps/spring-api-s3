@@ -24,4 +24,36 @@ public class Caracteristicas {
     }
 
     public Caracteristicas() {}
+
+    public Integer getQuartos() {
+        return quartos;
+    }
+
+    public void setQuartos(Integer quartos) {
+        this.quartos = quartos;
+    }
+
+    public Integer getSuites() {
+        return suites;
+    }
+
+    public void setSuites(Integer suites) {
+        this.suites = suites;
+    }
+
+    public Boolean getGaragem() {
+        return garagem;
+    }
+
+    public void setGaragem(Boolean garagem) {
+        this.garagem = garagem;
+    }
+
+    public Integer getBanheiros() {
+        return banheiros;
+    }
+
+    public void setBanheiros(Integer banheiros) {
+        this.banheiros = banheiros;
+    }
 }
