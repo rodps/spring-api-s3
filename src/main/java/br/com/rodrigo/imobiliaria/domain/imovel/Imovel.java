@@ -2,6 +2,8 @@ package br.com.rodrigo.imobiliaria.domain.imovel;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "imoveis")
 public class Imovel {

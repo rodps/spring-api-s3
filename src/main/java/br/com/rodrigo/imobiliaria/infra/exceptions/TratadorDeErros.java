@@ -1,5 +1,6 @@
 package br.com.rodrigo.imobiliaria.infra.exceptions;
 
+import br.com.rodrigo.imobiliaria.infra.storage.StorageFileNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -22,6 +23,11 @@ public class TratadorDeErros {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity tratarErroEntityNotFound() {
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(StorageFileNotFoundException.class)
+    public ResponseEntity tratarStorageFileNotFound() {
         return ResponseEntity.notFound().build();
     }
 
