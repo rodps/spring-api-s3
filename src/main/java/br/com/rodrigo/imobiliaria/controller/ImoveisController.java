@@ -5,16 +5,14 @@ import br.com.rodrigo.imobiliaria.infra.storage.StorageService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.io.IOException;
-import java.net.URI;
 
 @RestController
 @RequestMapping("/imoveis")
@@ -25,9 +23,15 @@ public class ImoveisController {
     @Autowired
     private ImagemRepository imagemRepository;
 
-    @Autowired
-    @Qualifier("s3")
+    @Value("${app.storageservice.name:filesystem}")
+    private String storageServiceName;
+
     private StorageService storageService;
+
+    @Autowired
+    public void setStorageService(ApplicationContext context) {
+        this.storageService = (StorageService) context.getBean(storageServiceName);
+    }
 
     @PostMapping()
     @Transactional
@@ -65,7 +69,7 @@ public class ImoveisController {
     public ResponseEntity getImovelImages(@PathVariable Long id) {
         var imagens = imagemRepository.findByImovelId(id);
         return ResponseEntity.ok(imagens.stream().map(
-                                    i -> new DadosImagem(i, storageService.getURLResolver())
+                                    i -> new DadosImagem(i, storageService.getUrlResolver())
                                 ));
     }
 

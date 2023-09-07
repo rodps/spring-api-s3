@@ -2,7 +2,6 @@ package br.com.rodrigo.imobiliaria.infra.aws.s3;
 
 import br.com.rodrigo.imobiliaria.infra.storage.StorageFileNotFoundException;
 import br.com.rodrigo.imobiliaria.infra.storage.StorageService;
-import br.com.rodrigo.imobiliaria.infra.storage.StorageURLResolver;
 import io.awspring.cloud.s3.ObjectMetadata;
 import io.awspring.cloud.s3.S3Operations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,7 +22,7 @@ class S3StorageService implements StorageService {
     private String BUCKET;
 
     @Autowired
-    private S3StorageURLResolver urlResolver;
+    private S3StorageUrlResolver urlResolver;
 
     public S3StorageService(S3Operations s3Operations) {
         this.s3Operations = s3Operations;
@@ -32,8 +30,7 @@ class S3StorageService implements StorageService {
 
     @Override
     public String store(MultipartFile file) {
-        String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-        String filename = StorageService.generateRandomName() + "." + extension;
+        String filename = file.getOriginalFilename();
         try (InputStream is = file.getInputStream()) {
             var result = s3Operations.upload(BUCKET, filename, is,
                     ObjectMetadata.builder().contentType(file.getContentType()).build());
@@ -60,7 +57,7 @@ class S3StorageService implements StorageService {
     }
 
     @Override
-    public S3StorageURLResolver getURLResolver() {
+    public S3StorageUrlResolver getUrlResolver() {
         return urlResolver;
     }
 

@@ -3,9 +3,6 @@ package br.com.rodrigo.imobiliaria.infra.storage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,7 +11,6 @@ import java.nio.file.StandardCopyOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service("filesystem")
@@ -28,7 +24,7 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Autowired
-    private FileSystemStorageURLResolver urlResolver;
+    private FileSystemStorageUrlResolver urlResolver;
 
     @Override
     public String store(MultipartFile file) {
@@ -36,8 +32,7 @@ public class FileSystemStorageService implements StorageService {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file.");
             }
-            String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-            String filename = StorageService.generateRandomName() + "." + extension;
+            String filename = file.getOriginalFilename();
             Path destinationFile = this.rootLocation.resolve(Paths.get(filename))
                     .normalize().toAbsolutePath();
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
@@ -82,7 +77,7 @@ public class FileSystemStorageService implements StorageService {
     }
 
     @Override
-    public FileSystemStorageURLResolver getURLResolver() {
+    public FileSystemStorageUrlResolver getUrlResolver() {
         return urlResolver;
     }
 
