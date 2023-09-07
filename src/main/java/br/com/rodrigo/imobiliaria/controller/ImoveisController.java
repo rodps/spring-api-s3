@@ -5,6 +5,7 @@ import br.com.rodrigo.imobiliaria.infra.storage.StorageService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class ImoveisController {
     private ImagemRepository imagemRepository;
 
     @Autowired
+    @Qualifier("s3")
     private StorageService storageService;
 
     @PostMapping()
@@ -52,8 +54,8 @@ public class ImoveisController {
             return ResponseEntity.badRequest().body("Não existe imóvel com este ID.");
         }
         for (MultipartFile file: files) {
-            var fileName = storageService.store(file);
-            var imagem = new Imagem(fileName, id);
+            var filename = storageService.store(file);
+            var imagem = new Imagem(filename, id);
             imagemRepository.save(imagem);
         }
         return ResponseEntity.ok().build();
@@ -62,7 +64,9 @@ public class ImoveisController {
     @GetMapping("{id}/images")
     public ResponseEntity getImovelImages(@PathVariable Long id) {
         var imagens = imagemRepository.findByImovelId(id);
-        return ResponseEntity.ok(imagens.stream().map(DadosImagem::new));
+        return ResponseEntity.ok(imagens.stream().map(
+                                    i -> new DadosImagem(i, storageService.getURLResolver())
+                                ));
     }
 
     @DeleteMapping("/images/{id}")

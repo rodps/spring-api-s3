@@ -3,18 +3,21 @@ package br.com.rodrigo.imobiliaria.infra.storage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-@Service
+@Service("filesystem")
 public class FileSystemStorageService implements StorageService {
 
     private final Path rootLocation;
@@ -24,14 +27,18 @@ public class FileSystemStorageService implements StorageService {
         this.rootLocation = Paths.get(properties.getLocation());
     }
 
+    @Autowired
+    private FileSystemStorageURLResolver urlResolver;
+
     @Override
     public String store(MultipartFile file) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file.");
             }
-            Path destinationFile = this.rootLocation.resolve(
-                            Paths.get(file.getOriginalFilename()))
+            String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
+            String filename = StorageService.generateRandomName() + "." + extension;
+            Path destinationFile = this.rootLocation.resolve(Paths.get(filename))
                     .normalize().toAbsolutePath();
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
                 // This is a security check
@@ -42,7 +49,7 @@ public class FileSystemStorageService implements StorageService {
                 Files.copy(inputStream, destinationFile,
                         StandardCopyOption.REPLACE_EXISTING);
 
-                return destinationFile.getFileName().toString();
+                return filename;
             }
         }
         catch (IOException e) {
@@ -72,6 +79,11 @@ public class FileSystemStorageService implements StorageService {
         } catch (MalformedURLException e) {
             throw new StorageFileNotFoundException("Could not read file: " + fileName, e);
         }
+    }
+
+    @Override
+    public FileSystemStorageURLResolver getURLResolver() {
+        return urlResolver;
     }
 
     @Override

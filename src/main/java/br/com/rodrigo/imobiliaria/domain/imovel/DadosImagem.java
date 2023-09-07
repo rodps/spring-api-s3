@@ -1,8 +1,10 @@
 package br.com.rodrigo.imobiliaria.domain.imovel;
 
-public record DadosImagem(Long id, String nome, String location) {
+import br.com.rodrigo.imobiliaria.infra.storage.StorageURLResolver;
 
-    public DadosImagem(Imagem imagem) {
-        this(imagem.getId(), imagem.getNome(), "/imoveis/images/" + imagem.getNome());
+public record DadosImagem(Long id, String nome, String url) {
+
+    public DadosImagem(Imagem imagem, StorageURLResolver urlResolver) {
+        this(imagem.getId(), imagem.getNome(), urlResolver.getUrl(imagem.getNome()));
     }
 }
