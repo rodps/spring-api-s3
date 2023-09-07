@@ -1,8 +1,7 @@
 package br.com.rodrigo.imobiliaria.domain.imovel;
 
+import br.com.rodrigo.imobiliaria.domain.imovel.dto.DadosCadastroImovel;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "imoveis")

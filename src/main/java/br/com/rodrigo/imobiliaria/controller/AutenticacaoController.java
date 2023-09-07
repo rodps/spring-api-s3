@@ -1,8 +1,8 @@
 package br.com.rodrigo.imobiliaria.controller;
 
-import br.com.rodrigo.imobiliaria.domain.usuario.DadosAutenticacao;
+import br.com.rodrigo.imobiliaria.domain.autenticacao.dto.DadosAutenticacao;
 import br.com.rodrigo.imobiliaria.domain.usuario.Usuario;
-import br.com.rodrigo.imobiliaria.domain.usuario.DadosJwt;
+import br.com.rodrigo.imobiliaria.domain.autenticacao.dto.DadosJwt;
 import br.com.rodrigo.imobiliaria.infra.security.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package br.com.rodrigo.imobiliaria.domain.imovel;
+package br.com.rodrigo.imobiliaria.domain.imovel.dto;
 
 import jakarta.validation.constraints.NotBlank;
 

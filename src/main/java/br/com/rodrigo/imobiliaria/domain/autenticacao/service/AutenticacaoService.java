@@ -1,5 +1,6 @@
-package br.com.rodrigo.imobiliaria.domain.usuario;
+package br.com.rodrigo.imobiliaria.domain.autenticacao.service;
 
+import br.com.rodrigo.imobiliaria.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

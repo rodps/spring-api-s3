@@ -1,5 +1,6 @@
 package br.com.rodrigo.imobiliaria.domain.imovel;
 
+import br.com.rodrigo.imobiliaria.domain.imovel.dto.DadosCaracteristicas;
 import jakarta.persistence.Embeddable;
 
 @Embeddable

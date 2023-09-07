@@ -1,4 +1,8 @@
-package br.com.rodrigo.imobiliaria.domain.imovel;
+package br.com.rodrigo.imobiliaria.domain.imovel.dto;
+
+import br.com.rodrigo.imobiliaria.domain.imovel.Caracteristicas;
+import br.com.rodrigo.imobiliaria.domain.imovel.Endereco;
+import br.com.rodrigo.imobiliaria.domain.imovel.Imovel;
 
 public record DadosDetalhamentoImovel(
         String nome,

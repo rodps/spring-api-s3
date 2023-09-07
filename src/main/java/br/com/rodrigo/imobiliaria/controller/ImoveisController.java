@@ -1,6 +1,9 @@
 package br.com.rodrigo.imobiliaria.controller;
 
 import br.com.rodrigo.imobiliaria.domain.imovel.*;
+import br.com.rodrigo.imobiliaria.domain.imovel.dto.DadosCadastroImovel;
+import br.com.rodrigo.imobiliaria.domain.imovel.dto.DadosDetalhamentoImovel;
+import br.com.rodrigo.imobiliaria.domain.imovel.dto.DadosImagem;
 import br.com.rodrigo.imobiliaria.infra.storage.StorageService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
