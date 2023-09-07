@@ -30,5 +30,10 @@ public class TratadorDeErros {
         return ResponseEntity.notFound().build();
     }
 
+    @ExceptionHandler(ValidacaoException.class)
+    public ResponseEntity tratarErroRegraDeNegocio(ValidacaoException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
     private record DadosErroValidacao(String campo, String mensagem) {}
 }

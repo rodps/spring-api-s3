@@ -1,6 +1,7 @@
-package br.com.rodrigo.imobiliaria.infra.security;
+package br.com.rodrigo.imobiliaria.filters;
 
 import br.com.rodrigo.imobiliaria.domain.usuario.UsuarioRepository;
+import br.com.rodrigo.imobiliaria.infra.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

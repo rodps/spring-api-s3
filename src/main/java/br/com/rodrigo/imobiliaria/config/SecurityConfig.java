@@ -1,5 +1,6 @@
-package br.com.rodrigo.imobiliaria.infra.security;
+package br.com.rodrigo.imobiliaria.config;
 
+import br.com.rodrigo.imobiliaria.filters.AuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
