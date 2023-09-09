@@ -1,4 +1,4 @@
-package br.com.rodrigo.imobiliaria.domain.autenticacao.service;
+package br.com.rodrigo.imobiliaria.domain.usuario.service;
 
 import br.com.rodrigo.imobiliaria.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AutenticacaoService implements UserDetailsService {
+public class ObterUsuarioAutenticadoService implements UserDetailsService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;

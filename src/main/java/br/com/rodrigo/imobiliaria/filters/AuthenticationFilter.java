@@ -25,16 +25,26 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var authHeader = request.getHeader("Authorization");
-        if (authHeader != null) {
-            var token = authHeader.replace("Bearer ", "");
-            var subject = jwtService.getSubject(token);
-            var usuario = usuarioRepository.findByLogin(subject);
-
-            var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = getBearerToken(request);
+        if (token != null) {
+            verificarToken(token);
         }
-
         filterChain.doFilter(request, response);
+    }
+
+    private String getBearerToken(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null) {
+            return authHeader.replace("Bearer ", "");
+        }
+        return null;
+    }
+
+    private void verificarToken(String token) {
+        var subject = jwtService.getSubject(token);
+        var usuario = usuarioRepository.findByLogin(subject);
+
+        var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
